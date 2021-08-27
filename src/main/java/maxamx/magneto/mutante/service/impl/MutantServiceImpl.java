@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MutantServiceImpl implements MutantService {
@@ -16,22 +15,24 @@ public class MutantServiceImpl implements MutantService {
 
     @Override
     public boolean isMutant(final String[] dna) {
-//        long quantidadeHorizontal = horizontal(dna);
-//        long quantidadeVertical = vertical(dna);
-
-    return false;
+        long quantidade = localizaSequenciaNaHorizontal(dna)+localizaSequenciaNaVertical(dna);
+        return quantidade >1;
     }
 
-    public boolean horizontal(final String[] dna) {
+    private long localizaSequenciaNaHorizontal(final String[] dna) {
         return Arrays.stream(dna)
-                .filter(horizontal -> sequencia.stream().filter(horizontal::contains).count()>0)
-                .count()>0;
+                .filter(this::localizaSequenciaMutante)
+                .count();
     }
 
-    public boolean vertical(final String[] dna) {
+    private boolean localizaSequenciaMutante(String sequenciaColetada) {
+        return sequencia.stream().filter(sequenciaColetada::contains).count()>0;
+    }
+
+    private long localizaSequenciaNaVertical(final String[] dna) {
         return Arrays.stream(dna)
-                .filter(vertical -> sequencia.stream().filter(vertical::contains).count()>0)
-                .count()>0;
+                .filter(this::localizaSequenciaMutante)
+                .count();
     }
 
 
