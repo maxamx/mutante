@@ -16,7 +16,7 @@ public class MutanteController {
     private MutantService mutantService;
 
     @PostMapping("/mutante")
-    public ResponseEntity<Boolean> mutant(@RequestBody String [] dna){
+    public ResponseEntity<Boolean> mutant(@RequestBody String[] dna){
         boolean result = mutantService.isMutant(dna);
         if (result){
             return ResponseEntity.ok().build();
