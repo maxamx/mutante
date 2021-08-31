@@ -10,9 +10,6 @@ import org.mockito.Mock;
 
 public class MutanteTest {
 
-
-
-
     private MutanteService mutantService;
     @Mock
     private MutanteRepository mutanteRepository;
