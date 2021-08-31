@@ -9,9 +9,15 @@ import maxamx.magneto.mutante.vo.ResultadoEstatisticaVO;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static maxamx.magneto.mutante.util.MatrizUtil.localizaSequenciaNaHorizontal;
+import static maxamx.magneto.mutante.util.MatrizUtil.localizaSequenciaNaVertical;
+import static maxamx.magneto.mutante.util.MatrizUtil.localizaSequenciaNaDiagonalPrincipal;
+import static maxamx.magneto.mutante.util.MatrizUtil.localizaSequenciaNaDiagonalSecundaria;
 
 @Service
 @AllArgsConstructor()
@@ -23,7 +29,10 @@ public class MutantServiceImpl implements MutanteService {
 
     @Override
     public boolean isMutant(final String[] dna) {
-        long quantidade = localizaSequenciaNaHorizontal(dna)+localizaSequenciaNaVertical(dna);
+        long quantidade = localizaSequenciaNaHorizontal(dna,sequencia)
+                            +localizaSequenciaNaVertical(dna,sequencia)
+                            +localizaSequenciaNaDiagonalPrincipal(dna,sequencia)
+                            +localizaSequenciaNaDiagonalSecundaria(dna,sequencia);
         return quantidade >1;
     }
 
@@ -47,21 +56,8 @@ public class MutantServiceImpl implements MutanteService {
         } else return "Não há como calcular a rãzão";
     }
 
-    private long localizaSequenciaNaHorizontal(final String[] dna) {
-        return Arrays.stream(dna)
-                .filter(this::localizaSequenciaMutante)
-                .count();
-    }
 
-    private boolean localizaSequenciaMutante(String sequenciaColetada) {
-        return sequencia.stream().anyMatch(sequenciaColetada::contains);
-    }
 
-    private long localizaSequenciaNaVertical(final String[] dna) {
-        return Arrays.stream(dna)
-                .filter(this::localizaSequenciaMutante)
-                .count();
-    }
 
 
 }
