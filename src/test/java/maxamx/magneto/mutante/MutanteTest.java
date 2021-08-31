@@ -1,18 +1,12 @@
 package maxamx.magneto.mutante;
 
-import lombok.AllArgsConstructor;
 import maxamx.magneto.mutante.repository.MutanteRepository;
 import maxamx.magneto.mutante.service.MutanteService;
 import maxamx.magneto.mutante.service.impl.MutantServiceImpl;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 public class MutanteTest {
 
