@@ -1,18 +1,31 @@
 package maxamx.magneto.mutante;
 
-import maxamx.magneto.mutante.service.MutantService;
+import lombok.AllArgsConstructor;
+import maxamx.magneto.mutante.repository.MutanteRepository;
+import maxamx.magneto.mutante.service.MutanteService;
 import maxamx.magneto.mutante.service.impl.MutantServiceImpl;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 public class MutanteTest {
 
-    private MutantService mutantService;
+
+
+
+    private MutanteService mutantService;
+    @Mock
+    private MutanteRepository mutanteRepository;
 
     @BeforeEach
-    void carrega(){
-        mutantService = new MutantServiceImpl();
+    void loadContext(){
+        mutantService = new MutantServiceImpl(mutanteRepository);
     }
 
     @Test
@@ -30,13 +43,13 @@ public class MutanteTest {
 
     @Test
     void existeSequenciaNaVertical(){
-        String [] dna = {"ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"};
+        String [] dna = {"ATGCGA","CAGTGC","TTATGT","TGAAGG","TATATA","TCACTG"};
         Assertions.assertTrue(mutantService.isMutant(dna));
     }
 
     @Test
     void inexistenteSequenciaNaVertical(){
-        String [] dna = {"ATGCGA","CAGTGC","TTATGT","AGAATG","CCCCTA","TCACTG"};
+        String [] dna = {"ATGCGA","CAGTGC","TTATGT","AGAATG","TATATA","TCACTG"};
         Assertions.assertTrue(mutantService.isMutant(dna));
     }
 }
